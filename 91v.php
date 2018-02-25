@@ -6,6 +6,8 @@ require 'lib/QueryList.php';
 
 use QL\QueryList;
 
+echo $_REQUEST["proxy"] ? 'tcp://'.$_REQUEST["proxy"] : '';
+
 function getList(){
 
 	#获取URL
@@ -17,7 +19,7 @@ function getList(){
 	$opts = array(
 	  'http'=>array(
 	    'method'=>"GET",
-	    //'proxy'=>'tcp://115.29.236.46:8090',
+	    'proxy'=> $_REQUEST["proxy"] ? 'tcp://'.$_REQUEST["proxy"] : '',
 	    'header'=>"Content-Type: text/xml\r\n"."charset=utf-8\r\n"."Accept-language: zh-cn\r\n"."Cookie: foo=bar\r\n",
 	  )
 	);
@@ -53,7 +55,7 @@ $list = getList();
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="format-detection" content="telephone=no">
-        <title>FrozenUI Demo</title>
+        <title>视频详情-91视频预览</title>
         <link rel="stylesheet" href="frozenui/css/frozen.css">
         <link rel="stylesheet" href="frozenui/css/demo.css">
     </head>

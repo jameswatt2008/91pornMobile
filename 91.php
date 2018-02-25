@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 #引入模块
 require 'lib/phpQuery.php';
 require 'lib/QueryList.php';
@@ -46,8 +46,8 @@ function getList($domain="http://www.91porn.com",$page = 1){
 
 #获取URL
 $domain="http://www.91porn.com";
-if($_REQUEST["domain"] && startsWith($_REQUEST["domain"], 'http')){
-	$domain = $_REQUEST["domain"];
+if($_REQUEST["domain"]){
+	$domain = urldecode($_REQUEST["domain"]);
 }
 $page=1;
 if($_REQUEST["page"]){
@@ -62,7 +62,7 @@ $list = getList($domain,$page);
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
         <meta name="format-detection" content="telephone=no">
-        <title>FrozenUI Demo</title>
+        <title>视频列表-91视频预览</title>
         <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=37342703" charset="UTF-8"></script>-->
         <link rel="stylesheet" href="frozenui/css/frozen.css">
         <link rel="stylesheet" href="frozenui/css/demo.css">
@@ -83,7 +83,7 @@ $list = getList($domain,$page);
                 <ul class="ui-grid-trisect">
                 	<?php
                 	foreach ($list as $key => $value) {  ?>              		
-	                    <li data-href="91v.php?url=<?php echo $value["link"]?>">
+	                    <li data-href="91v.php?url=<?php echo $value["link"]?>&proxy=<?php echo urldecode($_REQUEST["proxy"]) ?>">
 	                        <div class="ui-border">
 	                            <div class="ui-grid-trisect-img">
 	                                <span style="background-image:url('<?php echo $value["pic"]?>')"></span>
