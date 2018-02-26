@@ -1,52 +1,62 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 #引入模块
 require 'lib/phpQuery.php';
 require 'lib/QueryList.php';
+require 'core/readHtml.php';
+require 'core/db.php';
 
 use QL\QueryList;
 
 echo $_REQUEST["proxy"] ? 'tcp://'.$_REQUEST["proxy"] : '';
 
-function getList(){
+function getList($url){
 
 	#获取URL
-	$url = $_REQUEST["url"];
-	//$url = "http://www.checkip.org/";
-	echo "URL is : ". $url ."<br>";
+	/*$url = $_REQUEST["url"];
 
-	#读取HTML
-	$opts = array(
-	  'http'=>array(
-	    'method'=>"GET",
-	    'proxy'=> $_REQUEST["proxy"] ? 'tcp://'.$_REQUEST["proxy"] : '',
-	    'header'=>"Content-Type: text/xml\r\n"."charset=utf-8\r\n"."Accept-language: zh-cn\r\n"."Cookie: foo=bar\r\n",
-	  )
-	);
+	$video=$db->select("videos","Video",["URL" => $url]);
 
-	$context = stream_context_create($opts);
+	if($data){
+		return $video[0]["Video"];
+	}*/
 
-	// Open the file using the HTTP headers set above
-	$html = file_get_contents($url, false, $context);
-	#$file = iconv("utf-8", "utf-8",file_get_contents($url, false, $context));
-
-	//$html=str_replace("�", "", $html);
-	#$html = preg_replace('/<span class="title">(.*)/', '', $html);
-	//echo $html;
-
-	//$html=str_replace("�", "", $html);
+	$html = readHtml($url,$_REQUEST["proxy"]);
 	
-
 	$rules = array(
     //采集id为one这个元素里面的纯文本内容
     'video' => array('source','src')
 	);
 	$data = QueryList::Query($html,$rules)->data;
-	print_r($data);
-	return $data;
+	//print_r($data);
+
+	$link = $data[0]["video"];
+
+	$db->insert("videos",[
+		"URL" => $url,
+		"Video" => $link
+	]);
+
+
+	return $link;
 }
 
-$list = getList();
+//$video = getList();
+
+
+#获取URL
+$url = $_REQUEST["url"];
+
+$dbResult=$db->select("videos","Video",["URL" => $url]);
+
+if($dbResult){
+	$video = $dbResult[0]["Video"];
+	$catch=true;
+}else{
+	$video = getList($url);
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -65,6 +75,13 @@ $list = getList();
         </header>
 
         <section class="ui-container">
+        	<?php if($catch){ ?>
+        	<div class="ui-tooltips ui-tooltips-guide">
+                <div class="ui-tooltips-cnt ui-tooltips-cnt-link ui-border-b">
+                    <i class="ui-icon-talk"></i><?php echo $catch; ?>
+                </div>
+            </div>
+            <?php } ?>
         	<video width="100%"  controls="controls">
         		<source src="<?php echo $list[0]["video"]; ?>" type="video/mp4">
         	</video>

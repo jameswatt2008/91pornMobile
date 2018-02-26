@@ -3,34 +3,19 @@
 #引入模块
 require 'lib/phpQuery.php';
 require 'lib/QueryList.php';
+require 'core/readHtml.php';
 
 use QL\QueryList;
 
 function getList($domain="http://www.91porn.com",$page = 1){
 
 	$url = $domain."/video.php?category=rf&page=".$page;
-	echo "URL is : ". $url ."<br>";
 
-	#读取HTML
-	$opts = array(
-	  'http'=>array(
-	    'method'=>"GET",
-	    'header'=>"Content-Type: text/xml\r\n"."charset=utf-8\r\n"."Accept-language: zh-cn\r\n"."Cookie: foo=bar\r\n",
-	  )
-	);
+	$html = readHtml($url);
 
-	$context = stream_context_create($opts);
-
-	// Open the file using the HTTP headers set above
-	$html = file_get_contents($url, false, $context);
-	#$file = iconv("utf-8", "utf-8",file_get_contents($url, false, $context));
-
-	//$html=str_replace("�", "", $html);
-	$html = preg_replace('/<span class="title">(.*)/', '', $html);
 	//echo $html;
-
-	//$html=str_replace("�", "", $html);
 	
+	$html = preg_replace('/<span class="title">(.*)/', '', $html);	
 
 	$rules = array(
     //采集id为one这个元素里面的纯文本内容

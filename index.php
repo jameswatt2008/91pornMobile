@@ -1,34 +1,15 @@
 <?php
-#error_reporting(0);
+error_reporting(0);
 #引入模块
 require 'lib/phpQuery.php';
 require 'lib/QueryList.php';
+require 'core/readHtml.php';
 
 use QL\QueryList;
 
 function getList(){
 
-	$url = "https://free-proxy-list.net/";
-	echo "URL is : ". $url ."<br>";
-
-	#读取HTML
-	$opts = array(
-	  'http'=>array(
-	    'method'=>"GET",
-	    'header'=>"Content-Type: text/xml\r\n"."charset=utf-8\r\n"."Accept-language: zh-cn\r\n"."Cookie: foo=bar\r\n",
-	  )
-	);
-
-	$context = stream_context_create($opts);
-
-	// Open the file using the HTTP headers set above
-	$html = file_get_contents($url, false, $context);
-	#$file = iconv("utf-8", "utf-8",file_get_contents($url, false, $context));
-
-	//echo ($html);
-
-	//$html=str_replace("�", "", $html);
-	
+	$html = readHtml($url);
 
 	$rules = array(
     //采集id为one这个元素里面的纯文本内容
