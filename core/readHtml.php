@@ -1,7 +1,7 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 
-function readHtml($url,$proxy=""){
+function readHtml($url,$proxyip=""){
 
 	//echo "URL is : ". $url ."<br>";
 
@@ -9,7 +9,7 @@ function readHtml($url,$proxy=""){
 	$opts = array(
 	  'http'=>array(
 	    'method'=>"GET",
-	    'proxy'=> $_REQUEST["proxy"] ? 'tcp://'.$_REQUEST["proxy"] : '',
+	    'proxy'=> $proxyip=="" ? "" : 'tcp://'.$proxyip,
 	    'header'=>"Content-Type: text/xml\r\n"."charset=utf-8\r\n"."Accept-language: zh-cn\r\n"."Cookie: foo=bar\r\n",
 	  )
 	);

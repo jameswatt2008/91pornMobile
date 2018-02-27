@@ -9,6 +9,7 @@ use QL\QueryList;
 
 function getList(){
 
+    $url = "https://free-proxy-list.net/";
 	$html = readHtml($url);
 
 	$rules = array(
@@ -64,7 +65,7 @@ $list = getList();
                             代理服务器
                         </label>
                         <div class="ui-select">
-                            <select name="proxy">
+                            <select name="proxyip">
                                 <option>无</option>
                                 <?php foreach ($list as $key => $value) {
                                 	echo '<option value="'.$value["ip"].':'.$value["port"].'">'.$value["ip"].'['.$value["country"].']</option>';
@@ -72,6 +73,9 @@ $list = getList();
                             </select>
                         </div>
                     </div>
+                    <div class="ui-tips ui-tips-info">
+                <i></i><span>如果解析失败，请切换代理，代理地址自动更新，可用率非100%</span>
+            </div>
                     <div class="ui-btn-wrap">
 		                <button type="submit" class="ui-btn-lg ui-btn-primary">
 		                    确定

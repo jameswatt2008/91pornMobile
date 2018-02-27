@@ -1,5 +1,5 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 #引入模块
 require 'lib/phpQuery.php';
 require 'lib/QueryList.php';
@@ -10,6 +10,8 @@ use QL\QueryList;
 function getList($domain="http://www.91porn.com",$page = 1){
 
 	$url = $domain."/video.php?category=rf&page=".$page;
+
+    echo $url;
 
 	$html = readHtml($url);
 
@@ -68,7 +70,7 @@ $list = getList($domain,$page);
                 <ul class="ui-grid-trisect">
                 	<?php
                 	foreach ($list as $key => $value) {  ?>              		
-	                    <li data-href="91v.php?url=<?php echo $value["link"]?>&proxy=<?php echo urldecode($_REQUEST["proxy"]) ?>">
+	                    <li data-href="91v.php?url=<?php echo $value["link"]?>&proxyip=<?php echo urldecode($_REQUEST["proxyip"]) ?>">
 	                        <div class="ui-border">
 	                            <div class="ui-grid-trisect-img">
 	                                <span style="background-image:url('<?php echo $value["pic"]?>')"></span>

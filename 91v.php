@@ -1,14 +1,20 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 #引入模块
 require 'lib/phpQuery.php';
 require 'lib/QueryList.php';
 require 'core/readHtml.php';
-require 'core/db.php';
+require "lib/Medoo.php";
 
+use Medoo\Medoo;
 use QL\QueryList;
 
-echo $_REQUEST["proxy"] ? 'tcp://'.$_REQUEST["proxy"] : '';
+$db = new medoo([
+    'database_type' => 'sqlite',
+    'database_file' => 'db/91.db'
+]);
+
+//echo $_REQUEST["proxy"] ? 'tcp://'.$_REQUEST["proxy"] : '';
 
 function getList($url){
 
@@ -21,7 +27,7 @@ function getList($url){
 		return $video[0]["Video"];
 	}*/
 
-	$html = readHtml($url,$_REQUEST["proxy"]);
+	$html = readHtml($url,$_REQUEST["proxyip"]);
 	
 	$rules = array(
     //采集id为one这个元素里面的纯文本内容
@@ -32,10 +38,15 @@ function getList($url){
 
 	$link = $data[0]["video"];
 
-	$db->insert("videos",[
-		"URL" => $url,
-		"Video" => $link
-	]);
+    //print_r($db->id());
+    if($link){
+        global $db,$viewkey;
+
+    	$db->insert("videos",[
+    		"url" => $viewkey,
+    		"link" => $link
+    	]);
+    }
 
 
 	return $link;
@@ -47,15 +58,26 @@ function getList($url){
 #获取URL
 $url = $_REQUEST["url"];
 
-$dbResult=$db->select("videos","Video",["URL" => $url]);
+$urlarr=parse_url($url);
+parse_str($urlarr['query'],$parr);
+$viewkey = $parr["viewkey"];
+
+$dbResult=$db->select("videos","link",["url" => $viewkey]);
+
+    //print_r($dbResult);
+//$video = '';
 
 if($dbResult){
-	$video = $dbResult[0]["Video"];
+    //global $video;
+	$video = $dbResult[0];
 	$catch=true;
+    //echo $video;
 }else{
+    //global $video;
 	$video = getList($url);
+    //echo "src";
 }
-
+//print_r($db->select("videos","*"));
 
 ?>
 
@@ -78,12 +100,19 @@ if($dbResult){
         	<?php if($catch){ ?>
         	<div class="ui-tooltips ui-tooltips-guide">
                 <div class="ui-tooltips-cnt ui-tooltips-cnt-link ui-border-b">
-                    <i class="ui-icon-talk"></i><?php echo $catch; ?>
+                    <i class="ui-icon-talk"></i>通过缓存加载文件
+                </div>
+            </div>
+            <?php } ?>
+            <?php if(!$video){ ?>
+            <div class="ui-tooltips ui-tooltips-warn">
+                <div class="ui-tooltips-cnt ui-border-b">
+                    <i></i>获取失败，请重试或更换代理重试<a class="ui-icon-close"></a>
                 </div>
             </div>
             <?php } ?>
         	<video width="100%"  controls="controls">
-        		<source src="<?php echo $list[0]["video"]; ?>" type="video/mp4">
+        		<source src="<?php echo $video; ?>" type="video/mp4">
         	</video>
 		</section>
     </body>
