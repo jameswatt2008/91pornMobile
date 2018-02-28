@@ -1,6 +1,6 @@
 <?php
 
-include(dirname(__FILE__)."/../lib/Medoo.php");
+include("../Medoo.php");
 
 use Medoo\Medoo;
 
@@ -14,8 +14,7 @@ $db = new medoo([
 		"link"=>'bb',
 	]);
 print_r($id);
-
+*/
 //$db->query("INSERT INTO videos ('url', 'link') VALUES ('aa', 'bb')");
 
 print_r($db->select("videos","*"));
-*/

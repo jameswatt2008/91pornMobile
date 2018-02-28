@@ -27,7 +27,7 @@ function getList($url){
 		return $video[0]["Video"];
 	}*/
 
-	$html = readHtml($url,$_REQUEST["proxyip"]);
+	$html = readHtml($url,urldecode($_REQUEST["proxyip"]));
 	
 	$rules = array(
     //采集id为one这个元素里面的纯文本内容
@@ -56,7 +56,7 @@ function getList($url){
 
 
 #获取URL
-$url = $_REQUEST["url"];
+$url = urldecode($_REQUEST["url"]);
 
 $urlarr=parse_url($url);
 parse_str($urlarr['query'],$parr);

@@ -70,7 +70,7 @@ $list = getList($domain,$page);
                 <ul class="ui-grid-trisect">
                 	<?php
                 	foreach ($list as $key => $value) {  ?>              		
-	                    <li data-href="91v.php?url=<?php echo $value["link"]?>&proxyip=<?php echo urldecode($_REQUEST["proxyip"]) ?>">
+	                    <li data-href="91v.php?url=<?php echo urlencode($value["link"]) ?>&proxyip=<?php echo ($_REQUEST["proxyip"]) ?>">
 	                        <div class="ui-border">
 	                            <div class="ui-grid-trisect-img">
 	                                <span style="background-image:url('<?php echo $value["pic"]?>')"></span>
@@ -89,9 +89,9 @@ $list = getList($domain,$page);
 		</section>
                 
 		<?php if($page>1){ ?>
-			<div><a href="91.php?page=<?php echo $page - 1 ?>" class="ui-btn-lg">上一页</a><br></div>
+			<div><a href="91.php?page=<?php echo $page - 1 ?>&domain=<?php echo urlencode($domain) ?>&proxyip=<?php echo ($_REQUEST["proxyip"]) ?>" class="ui-btn-lg">上一页</a><br></div>
 		<?php } ?>		
-		<a href="91.php?page=<?php echo $page + 1 ?>" class="ui-btn-lg ui-btn-primary">下一页</a>
+		<a href="91.php?page=<?php echo $page + 1 ?>&domain=<?php echo urlencode($domain) ?>&proxyip=<?php echo ($_REQUEST["proxyip"]) ?>" class="ui-btn-lg ui-btn-primary">下一页</a>
             </div>
 
 		</section>

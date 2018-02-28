@@ -66,7 +66,7 @@ $list = getList();
                         </label>
                         <div class="ui-select">
                             <select name="proxyip">
-                                <option>无</option>
+                                <option value="">无</option>
                                 <?php foreach ($list as $key => $value) {
                                 	echo '<option value="'.$value["ip"].':'.$value["port"].'">'.$value["ip"].'['.$value["country"].']</option>';
                                 } ?>
