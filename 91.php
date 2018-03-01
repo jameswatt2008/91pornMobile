@@ -58,7 +58,7 @@ $list = getList($domain,$page);
     </head>
     <body ontouchstart>
     	<header class="ui-header ui-header-positive ui-border-b">
-            <h1>视频列表</h1>
+            <i class="ui-icon-return" onclick="history.back()"></i><h1>视频列表</h1><button onclick="window.location.href='index.php';" class="ui-btn">回首页</button>
         </header>
 
         <section class="ui-container">
@@ -70,7 +70,7 @@ $list = getList($domain,$page);
                 <ul class="ui-grid-trisect">
                 	<?php
                 	foreach ($list as $key => $value) {  ?>              		
-	                    <li data-href="91v.php?url=<?php echo urlencode($value["link"]) ?>&proxyip=<?php echo ($_REQUEST["proxyip"]) ?>">
+	                    <li data-href="91v.php?title=<?php echo urlencode($value["title"]) ?>&url=<?php echo urlencode($value["link"]) ?>&proxyip=<?php echo urlencode($_REQUEST["proxyip"]) ?>">
 	                        <div class="ui-border">
 	                            <div class="ui-grid-trisect-img">
 	                                <span style="background-image:url('<?php echo $value["pic"]?>')"></span>
