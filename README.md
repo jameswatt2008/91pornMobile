@@ -9,7 +9,7 @@
 当达到10次观看限制时，可自行切换代理以实现继续观看
 
 # 演示地址
-https://91porn.yzyz.ml/
+https://91.y2z.top/
 
 # 用法
 
@@ -17,7 +17,7 @@ https://91porn.yzyz.ml/
 
 <img src="https://ws1.sinaimg.cn/large/007452UMly1foya1v9unwj30a40aojri.jpg"/>
 
-2.点击确认进入列表页，如无需设置代理页码等，可直接打开https://91porn.yzyz.ml/91.php
+2.点击确认进入列表页，如无需设置代理页码等，可直接打开https://91.y2z.top/91.php
 
 <img src="https://ws1.sinaimg.cn/mw690/007452UMly1foya2fnqbzj30b70hfq6o.jpg"/>
 
